@@ -6,7 +6,7 @@ const { RolePermission, Role, User, Doctor } = require("./models");
 const authRoutes = require("./routes/authRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
 
-const rolePermissionRoutes = require("./routes/rolePermissionRoutes");
+
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -15,7 +15,7 @@ app.get("/", (req,res)=>res.send("Server Running "));
 
 app.use(authRoutes);
 app.use(doctorRoutes);
-app.use(rolePermissionRoutes); 
+
 async function syncDB(){
   try{
     await RolePermission.sync({alter:true});
