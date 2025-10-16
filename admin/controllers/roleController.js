@@ -1,25 +1,33 @@
 const { RolePermission, Role } = require("../models");
 
-// Create RolePermission
-const createRolePermission = async (req, res) => {
-  try {
-    const { description, componentAccess } = req.body;
-    const rp = await RolePermission.create({ description, componentAccess });
-    res.json(rp);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
 
-// Create Role
 const createRole = async (req, res) => {
   try {
-    const { name, description, moduleAccess, rolePermissionId } = req.body;
-    const role = await Role.create({ name, description, moduleAccess, rolePermissionId });
-    res.json(role);
+    const { name, description, moduleAccess, componentAccess } = req.body;
+
+    // Create RolePermission first
+    const rolePermission = await RolePermission.create({
+      description,
+      componentAccess
+    });
+
+    // create Role and link it
+    const role = await Role.create({
+      name,
+      description,
+      moduleAccess,
+      rolePermissionId: rolePermission.id
+    });
+
+    // Return response
+    res.status(201).json({
+      message: "Role and RolePermission created successfully",
+      role
+    });
   } catch (err) {
+    console.error("Error creating role:", err);
     res.status(500).json({ error: err.message });
   }
 };
 
-module.exports = { createRolePermission, createRole };
+module.exports = { createRole };
