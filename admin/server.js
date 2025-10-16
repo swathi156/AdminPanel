@@ -13,9 +13,9 @@ app.use(express.json());
 
 app.get("/", (req,res)=>res.send("Server Running "));
 
-app.use("/api/auth", authRoutes);
-app.use("/api/doctors", doctorRoutes);
-tes); 
+app.use(authRoutes);
+app.use(doctorRoutes);
+app.use(rolePermissionRoutes); 
 async function syncDB(){
   try{
     await RolePermission.sync({alter:true});
