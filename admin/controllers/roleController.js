@@ -1,17 +1,17 @@
 const { RolePermission, Role } = require("../models");
 
-
+// Create Role + RolePermission together
 const createRole = async (req, res) => {
   try {
     const { name, description, moduleAccess, componentAccess } = req.body;
 
-    // Create RolePermission first
+    // 1️Create RolePermission first
     const rolePermission = await RolePermission.create({
       description,
       componentAccess
     });
 
-    // create Role and link it
+    // Then create Role and link it
     const role = await Role.create({
       name,
       description,
