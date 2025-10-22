@@ -5,13 +5,13 @@ const createRole = async (req, res) => {
   try {
     const { name, description, moduleAccess, componentAccess } = req.body;
 
-    // 1️Create RolePermission first
+    // Create RolePermission first
     const rolePermission = await RolePermission.create({
       description,
       componentAccess
     });
 
-    // Then create Role and link it
+    // create Role and link it
     const role = await Role.create({
       name,
       description,
