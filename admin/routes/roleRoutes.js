@@ -1,10 +1,8 @@
-const router = require("express").Router();
-const roleController = require("../controllers/roleController");
-const authMiddleware = require("../middleware/authMiddleware");
+const express = require("express");
+const { createRole } = require("../controllers/roleController");
+const router = express.Router();
 
-router.use(authMiddleware);
-
-router.post("/permissions", roleController.createRolePermission);
-router.post("/", roleController.createRole);
+// Single API to create Role + RolePermission
+router.post("/roles", createRole);
 
 module.exports = router;
